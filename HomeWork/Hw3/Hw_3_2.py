@@ -7,8 +7,6 @@ MAX_HOURS = 23
 
 
 school_days = 0
-hours = 0
-minutes = 0
 
 
 def input_school_days():
