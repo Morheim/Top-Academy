@@ -1,7 +1,7 @@
-#https://top-academy.site/er8pidyex9r9hkpppjxvaxiblxtudymt/?clckid=1b61237f
+# https://top-academy.site/er8pidyex9r9hkpppjxvaxiblxtudymt/?clckid=1b61237f
 
 
-#https://top-academy.site/obysvv3o4dclrklqs6qdls3nnr2mj7qz/?clckid=e1280a75
+# https://top-academy.site/obysvv3o4dclrklqs6qdls3nnr2mj7qz/?clckid=e1280a75
 
 """Уровень 1: Базовый
 
@@ -13,25 +13,25 @@
 Если строки закончились,
 выведите сообщение: «Текст завершён»."""
 
+
 def CW1_1():
+	def read_file(name: str) -> list[str]:
+		with open("text.txt", "r", encoding="utf-8") as file:
+			data = file.read()
+			lines = data.split("\n")
+			return lines
 
- def read_file(name: str) -> list[str]:
-  with open("text.txt", "r", encoding="utf-8") as file:
-   data = file.read()
-   lines = data.split("\n")
-   return lines
+	def main() -> None:
+		lines = read_file("w1.txt")
+		iterator = iter(lines)
+		while True:
+			try:
+				print(next(iterator))
+			except:
+				print("Текст завершон")
+				break
 
- def main() -> None:
-  lines = read_file("w1.txt")
-  iterator = iter(lines)
-  while True:
-   try:
-    print(next(iterator))
-   except:
-    print("Текст завершон")
-    break
-
- main()
+	main()
 
 
 """Уровень 2: Средний
@@ -44,31 +44,30 @@ def CW1_1():
 числа по одному. Если числа закончились, 
 выведите сообщение: «Диапазон завершён»."""
 
+
 def CW2_1():
- def even_numbers_with_lc(start, end, step):
-  return [number for number in range(start, end + 1, step)]
+	def even_numbers_with_lc(start, end, step):
+		return [number for number in range(start, end + 1, step)]
 
- start = int(input("Введите начало диапазона: "))
- end = int(input("Введите конец диапазона: "))
- step = int(input("Введите шаг диапазона: "))
+	start = int(input("Введите начало диапазона: "))
+	end = int(input("Введите конец диапазона: "))
+	step = int(input("Введите шаг диапазона: "))
 
- print(f"Числа от {start} до {end} с диапазоном {step}: ", end="")
- print(even_numbers_with_lc(start, end, step))
- numbers = even_numbers_with_lc(start, end, step)
- iterals = iter(numbers)
+	print(f"Числа от {start} до {end} с диапазоном {step}: ", end="")
+	print(even_numbers_with_lc(start, end, step))
+	numbers = even_numbers_with_lc(start, end, step)
+	iterals = iter(numbers)
 
- print("Числа по порядку")
- while True:
-  try:
-   print(f"Число: {next(iterals)}")
-  except StopIteration:
-   print("«Диапазон завершён»")
-   break
-
-
+	print("Числа по порядку")
+	while True:
+		try:
+			print(f"Число: {next(iterals)}")
+		except StopIteration:
+			print("«Диапазон завершён»")
+			break
 
 
-#CW2_1()
+# CW2_1()
 """Уровень 3: Продвинутый
 
 Задача: напишите программу, 
@@ -83,50 +82,53 @@ def CW2_1():
 После завершения вывода всех 
 чисел сообщить: «Все числа выведены. Сумма: {сумма}»."""
 
+
 def CW3_1():
- def read_file(name: str) -> list[str]:
-  with open("text.txt", "r", encoding="utf-8") as file:
-   data = file.read()
-   nums = data.split(" ")
-   return nums
+	def read_file(name: str) -> list[str]:
+		with open("text.txt", "r", encoding="utf-8") as file:
+			data = file.read()
+			nums = data.split(" ")
+			return nums
 
- def main() -> None:
-  lines = read_file("w2.txt")
-  iterator = iter(lines)
+	def main() -> None:
+		lines = read_file("w2.txt")
+		iterator = iter(lines)
 
-  summa = 0
-  print("Числа по порядку")
-  while True:
-   try:
-    num = int(next(iterator))
-    summa += num
-    print(num)
-   except StopIteration:
-    print(f"Все числа выведены, их сумма = ({summa})")
-    break
+		summa = 0
+		print("Числа по порядку")
+		while True:
+			try:
+				num = int(next(iterator))
+				summa += num
+				print(num)
+			except StopIteration:
+				print(f"Все числа выведены, их сумма = ({summa})")
+				break
 
- main()
+	main()
 
-#CW3_1()
 
-#https://top-academy.site/bctshmsdmttdxvlu5nhjvebjew5m8uwn/?clckid=1666a36a
+# CW3_1()
+
+# https://top-academy.site/bctshmsdmttdxvlu5nhjvebjew5m8uwn/?clckid=1666a36a
 
 def CW1_2():
- def rep_msg(msg, times):
-  counter = 1
-  while counter <= times:
-   yield msg
-   counter += 1
+	def rep_msg(msg, times):
+		counter = 1
+		while counter <= times:
+			yield msg
+			counter += 1
 
- for i in rep_msg("Text", 5):
-  print(i)
+	for i in rep_msg("Text", 5):
+		print(i)
 
 
 def CW2_2():
- def filters_square(nums, tresshold):
-  return [n**2 for n in nums if n > tresshold]
- numbers = [1,4,19,20,5,3,2,-7,9]
- filtered = filters_square(numbers, 10)
- print(filtered)
+	def filters_square(nums, tresshold):
+		return [n ** 2 for n in nums if n > tresshold]
 
-#CW2_2()
+	numbers = [1, 4, 19, 20, 5, 3, 2, -7, 9]
+	filtered = filters_square(numbers, 10)
+	print(filtered)
+
+# CW2_2()
