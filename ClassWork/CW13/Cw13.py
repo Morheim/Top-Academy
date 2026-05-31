@@ -197,10 +197,12 @@ class Country:
 	def get_name_of_the_continent(self):
 		return self.name_of_the_continent
 
+
 	def set_number_of_inhabitants(self):
 		self.number_of_inhabitants = input("Введите ")
 	def get_number_of_inhabitants(self):
 		return self.number_of_inhabitants
+
 
 	def set_(self):
 		self. = input("Введите ")
