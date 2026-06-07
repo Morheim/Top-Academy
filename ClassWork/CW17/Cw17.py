@@ -86,15 +86,12 @@ print(audiobook.GetInfo())
 # «Сотрудник: {name}, Должность: {position}».
 
 class Employee:
-	def __init__(self, Name, Position):
-		self.Name = Name
-		self.Position = Position
+	def __init__(self, name, position):
+		self.name = name
+		self.position = position
 
-	def GetParams(self):
-		return {self.Name, self.Position}
-
-	def DisplayInfo(self):
-		return f"Сотрудник: {self.Name}, Должность: {self.Position}"
+	def display_info(self):
+		return f"Сотрудник: {self.name}, Должность: {self.position}"
 
 #
 # Уровень 2: Средний
@@ -106,79 +103,69 @@ class Employee:
 #   Имеет метод show_team, который выводит список всех сотрудников с их должностями.
 
 
-class Team(Employee):
-	def __init__(self, team_members):
-		self.team_members = team_members
-
-	def AddMember(self, emp):
-		self.team_members.add(emp)
-
-	def ShowTeam(cls):
-		for emp in cls.team_members:
-			print(f"{emp.DisplayInfo()}")
-
-	def UpdatePosition(self, Name, NewPosition):
-		if Name in self.team_members:
-			self.team_members[Name] = NewPosition
+class Team:
+	def __init__(self, initial_members = None):
+		if initial_members is None:
+			self.team_members = []
 		else:
-			print(f"Сотрудник {Name} не найден")
+			self.team_members = list(initial_members)
+
+	def add_member(self, employee):
+		if isinstance(employee, Employee):
+			self.team_members.append(employee)
+			print(f"Сотрудник {employee.name} добавлен в команду.")
+		else:
+			print("Ошибка: Можно добавить только объект класса Employee.")
+
+	def show_team(self):
+		if not self.team_members:
+			print("Команда пуста.")
+			return
+
+		else:
+			print("--- Состав команды ---")
+			for emp in self.team_members:
+				print(emp.display_info())
+			print("----------------------")
+
+	def update_position(self, name, new_position):
+		for emp in self.team_members:
+			if emp.name == name:
+				emp.position = new_position
+				print(f"Должность сотрудника '{name}' успешно изменена на '{new_position}'.")
+				return
+
+		print(f"Ошибка: Сотрудник с именем '{name}' не найден в команде.")
 
 
+# 1. Создаем начальный список сотрудников
+initial_members = [
+	Employee("Валера", "Программист"),
+	Employee("Гена", "Продажник")
+]
 
-Members = {Employee("Валера", "Программист"),
-           Employee("Гена", "Продажник")}
+# 2. Создаем объект команды и передаем туда начальный список
+team = Team(initial_members)
 
-team = Team(Members)
-team.AddMember(Employee("Валерия", "Стажёр"))
-team.ShowTeam()
+print("1. Изначальный состав:")
+team.show_team()
 print()
-team.UpdatePosition("Валера", "Старший програмист")
-team.ShowTeam()
 
+# 3. Добавляем нового сотрудника
+team.add_member(Employee("Валерия", "Стажёр"))
+print()
 
+print("2. Состав после добавления:")
+team.show_team()
+print()
 
+# 4. Обновляем должность
+team.update_position("Валера", "Старший программист")
+print()
 
+# 5. Пытаемся обновить должность несуществующего сотрудника
+team.update_position("Илон", "Директор")
+print()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print("3. Финальный состав:")
+team.show_team()
