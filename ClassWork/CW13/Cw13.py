@@ -159,7 +159,7 @@ class City:
 """Задание 3
 Создайте класс «Страна». Необходимо хранить в
 полях класса: 
-название страны, название континента
+название страны, 
 название континента,
 количество жителей в стране,
 телефонный код страны,
@@ -187,31 +187,40 @@ class Country:
 		self.names_of_cities_in_the_country = names_of_cities_in_the_country
 
 	def set_name_country(self):
-		self.name_country = input("Введите название страны")
+		self.name_country = input("Введите название страны ")
 	def get_name_country(self):
 		return self.name_country
 
 
 	def set_name_of_the_continent(self):
-		self.name_of_the_continent = input("Введите название континента")
+		self.name_of_the_continent = input("Введите название континента ")
 	def get_name_of_the_continent(self):
 		return self.name_of_the_continent
 
 
 	def set_number_of_inhabitants(self):
-		self.number_of_inhabitants = input("Введите ")
+		self.number_of_inhabitants = input("Введите количество жителей в стране ")
 	def get_number_of_inhabitants(self):
 		return self.number_of_inhabitants
 
 
-	def set_(self):
-		self. = input("Введите ")
+	def set_telephone_country_code(self):
+		self.telephone_country_code = input("Введите телефонный код страны ")
 
-	def get_(self):
-		return self.
+	def get_telephone_country_codeself(self):
+		return self.telephone_country_code
 
+	def set_name_of_the_capital(self):
+		self.name_of_the_capital = input("Введите название столицы ")
 
+	def get_name_of_the_capital(self):
+		return self.name_of_the_capital
 
+	def set_names_of_cities_in_the_country(self):
+		self.names_of_cities_in_the_country = input("Введите название городов страны ")
+
+	def get_names_of_cities_in_the_country(self):
+		return self.names_of_cities_in_the_country
 
 
 
