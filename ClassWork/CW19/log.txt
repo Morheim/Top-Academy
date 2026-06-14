@@ -1,0 +1,6 @@
+Имя функции: function, аргумент arg1
+Имя функции: function, аргумент arg2
+Имя функции: function, аргумент arg3
+Имя функции: function, аргумент arg4
+Имя функции: function, аргумент arg5
+Имя функции: function, аргумент arg6
