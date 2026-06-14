@@ -103,64 +103,98 @@ def greed1(name:str)->str:
 #«Калькулятор финансов»
 
 
-class FinanceCalculator():
+import os
+
+
+def log_transactions(func):
+	def wrapper(self, *args, **kwargs):
+		res = func(self, *args, **kwargs)
+		print(f"Лог: {func.__name__} вызвана с аргументами {args} и результатом {res}")
+		return res
+
+	return wrapper
+
+class FinanceManager:
 	def __init__(self):
-		self.___Balance = 0
-		self.TransactionList = list()
-
-	@classmethod
-	def log_transactions(func):
-		def wrapper(*args, **kwargs):
-			print(f"Имя функции {func.__name__}")
-			return func(*args, **kwargs)
-		return wrapper
-
-	@log_transactions
-	def add_transaction(self, type, amount, category):
-		pass
-
-	def get_transactions(self):
-		pass
-
-	def get_balance(self):
-		pass
-
-	def save_data(self):
-		pass
+		self.balance = 0.0
+		self.transactions = []
+		self.filename = "transactions.txt"
 
 	def load_data(self):
-		pass
+		if not os.path.exists(self.filename):
+			return print("Файл данных не найден. Начинаем с пустого баланса.")
+
+		with open(self.filename, 'r', encoding='utf-8') as f:
+			lines = f.read().splitlines()
+
+		if lines:
+			self.balance = float(lines[0].split(':')[1])
+			self.transactions = [{'type': t, 'amount': float(a), 'category': c}
+								 for t, a, c in (line.split(',') for line in lines[1:] if line)]
+		print("Данные успешно загружены из файла.")
+
+	@log_transactions
+	def add_transaction(self, t_type, amount, category):
+		if t_type not in ('доход', 'расход'):
+			return print("Ошибка: Неверный тип операции.")
+		if amount <= 0:
+			return print("Ошибка: Сумма должна быть положительным числом.")
+		if t_type == 'расход' and amount > self.balance:
+			return print("Ошибка: Недостаточно средств на балансе.")
+
+		self.balance += amount if t_type == 'доход' else -amount
+		self.transactions.append({'type': t_type, 'amount': amount, 'category': category})
+		print(f"Транзакция добавлена: {self.transactions[-1]}")
+		return True
+
+	def get_transactions(self):
+		return self.transactions
+
+	def get_balance(self):
+		return self.balance
+
+	def save_data(self):
+		with open(self.filename, 'w', encoding='utf-8') as f:
+			f.write(f"balance:{self.balance}\n")
+			f.writelines(f"{t['type']},{t['amount']},{t['category']}\n" for t in self.transactions)
 
 	def run(self):
-		pass
-def main_menu():
-	while True:
-		print("Кнопки меню:")
-		print("\t1. Добавление транзакции (доход или расход).")
-		print("\t2. Показать баланс и транзакции")
-		print("\t0. Сохранить и выйти")
-		print("\n\n")
-		try:
-			UserInput = int(input("Номер операции: ").strip())
-			match UserInput:
-				case 0:
-					print("exit")
+		while True:
+			print("\nМеню:\n1. Добавить доход/расход\n2. Показать баланс и транзакции\n3. Сохранить и выйти")
+			choice = input("Выберите действие: ").strip()
+
+			match choice:
+				case '1':
+					try:
+						self.add_transaction(
+							input("Введите тип (доход/расход): ").strip().lower(),
+							float(input("Введите сумму: ")),
+							input("Введите категорию: ").strip()
+						)
+					except ValueError:
+						print("Ошибка: Сумма должна быть числом.")
+
+				case '2':
+					print(f"Текущий баланс: {self.balance}\nСписок транзакций:")
+					if self.transactions:
+						for t in self.transactions:
+							print(t)
+					else:
+						print("Транзакции отсутствуют.")
+
+				case '3':
+					self.save_data()
+					print("Данные успешно сохранены в файл.\nПрограмма завершена.")
 					break
-				case 1:
-					pass
-				case 2:
-					pass
-				case 3:
-					pass
-				case 4:
-					pass
-		except:
-			print("Не верный ввод попробуйте снова")
-			continue
+
+				case _:
+					print("Ошибка: Неверный ввод команды.")
 
 
 if __name__ == "__main__":
-	main_menu()
+	app = FinanceManager()
+	app.load_data()
+	app.run()
 
 
 
