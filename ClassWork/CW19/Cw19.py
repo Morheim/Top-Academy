@@ -111,7 +111,6 @@ def log_transactions(func):
 		res = func(self, *args, **kwargs)
 		print(f"Лог: {func.__name__} вызвана с аргументами {args} и результатом {res}")
 		return res
-
 	return wrapper
 
 class FinanceManager:
@@ -123,13 +122,12 @@ class FinanceManager:
 	def load_data(self):
 		if not os.path.exists(self.filename):
 			return print("Файл данных не найден. Начинаем с пустого баланса.")
-
-		with open(self.filename, 'r', encoding='utf-8') as f:
-			lines = f.read().splitlines()
-
+		else:
+			with open(self.filename, 'r', encoding='utf-8') as file:
+				lines = file.read().splitlines()
 		if lines:
 			self.balance = float(lines[0].split(':')[1])
-			self.transactions = [{'type': t, 'amount': float(a), 'category': c}
+			self.transactions = [{'тип транзакции': t, 'сумма': float(a), 'категория': c}
 								 for t, a, c in (line.split(',') for line in lines[1:] if line)]
 		print("Данные успешно загружены из файла.")
 
@@ -143,7 +141,7 @@ class FinanceManager:
 			return print("Ошибка: Недостаточно средств на балансе.")
 
 		self.balance += amount if t_type == 'доход' else -amount
-		self.transactions.append({'type': t_type, 'amount': amount, 'category': category})
+		self.transactions.append({'тип транзакции': t_type, 'сумма': amount, 'категория': category})
 		print(f"Транзакция добавлена: {self.transactions[-1]}")
 		return True
 
@@ -154,23 +152,24 @@ class FinanceManager:
 		return self.balance
 
 	def save_data(self):
-		with open(self.filename, 'w', encoding='utf-8') as f:
-			f.write(f"balance:{self.balance}\n")
-			f.writelines(f"{t['type']},{t['amount']},{t['category']}\n" for t in self.transactions)
+		with open(self.filename, 'w', encoding='utf-8') as file:
+			file.write(f"balance:{self.balance}\n")
+			file.writelines(f"{t['тип транзакции']},{t['сумма']},{t['категория']}\n" for t in self.transactions)
 
 	def run(self):
 		while True:
-			print("\nМеню:\n1. Добавить доход/расход\n2. Показать баланс и транзакции\n3. Сохранить и выйти")
-			choice = input("Выберите действие: ").strip()
-
-			match choice:
+			print("\nМеню:")
+			print("\t1. Добавить доход/расход")
+			print("\t2. Показать баланс и транзакции")
+			print("\t3. Сохранить и выйти")
+			user_input = input("Выберите действие: ").strip()
+			match user_input:
 				case '1':
 					try:
-						self.add_transaction(
-							input("Введите тип (доход/расход): ").strip().lower(),
-							float(input("Введите сумму: ")),
-							input("Введите категорию: ").strip()
-						)
+						input_type = input("Введите тип (доход/расход): ").strip().lower()
+						input_amount = float(input("Введите сумму: ").strip())
+						input_category = input("Введите категорию: ").strip().capitalize()
+						self.add_transaction(input_type,input_amount, input_category)
 					except ValueError:
 						print("Ошибка: Сумма должна быть числом.")
 
